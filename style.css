@@ -1,0 +1,49 @@
+body{
+  font-family: 'Arial', sans-serif;
+  margin:0;
+  padding:0;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color:white;
+  text-align:center;
+}
+
+header{
+  background:#1e293b;
+  padding:20px;
+  box-shadow:0 0 10px #000;
+}
+
+header h1{
+  margin:0;
+}
+
+.login-box{
+  width:320px;
+  margin:80px auto;
+  padding:20px;
+  background:#1e293b;
+  border-radius:15px;
+  box-shadow:0 0 15px #000;
+}
+
+input{
+  width:90%;
+  padding:10px;
+  margin:10px 0;
+  border:none;
+  border-radius:8px;
+}
+
+button{
+  background:#38bdf8;
+  border:none;
+  padding:10px 20px;
+  cursor:pointer;
+  border-radius:8px;
+  margin:5px;
+  font-size:16px;
+}
+
+nav{
+  margin:20px;
+}
