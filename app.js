@@ -1,129 +1,100 @@
-let students = JSON.parse(localStorage.getItem("students")) || [];
+// --- 1. إعدادات Firebase ---
+const firebaseConfig = {
+  apiKey: "AIzaSyCt3On8r1FkPRbrpwKg2Llco-7tlURWG5s",
+  authDomain: "mrmohamed-platform.firebaseapp.com",
+  databaseURL: "https://mrmohamed-platform-default-rtdb.firebaseio.com",
+  projectId: "mrmohamed-platform",
+  storageBucket: "mrmohamed-platform.firebasestorage.app",
+  messagingSenderId: "222403252654",
+  appId: "1:222403252654:web:6950e99b1b03ed22a8783f"
+};
 
-function showRegister(){
-  document.getElementById("registerForm").style.display="block";
-}
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
 
-function register(){
-  let name = document.getElementById("newName").value;
-  let phone = document.getElementById("newPhone").value;
-  let pass = document.getElementById("newPass").value;
+document.addEventListener('DOMContentLoaded', () => {
 
-  if(!name || !phone || !pass){ alert("All fields required!"); return; }
+    // --- 2. نظام الحسابات (نفس الكود السابق) ---
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const phone = document.getElementById('phone').value;
+            const pass = document.getElementById('password').value;
+            database.ref('students/' + phone).once('value').then((snap) => {
+                if (snap.exists() && snap.val().password === pass) {
+                    localStorage.setItem('studentName', snap.val().fullName);
+                    localStorage.setItem('studentPhone', phone);
+                    window.location.href = 'dashboard.html';
+                } else { alert("بيانات خاطئة!"); }
+            });
+        });
+    }
 
-  if(students.find(s=>s.phone===phone)){
-    alert("Phone already registered!"); return;
-  }
+    // --- 3. لوحة التحكم ---
+    const welcomeTitle = document.getElementById('welcomeTitle');
+    if (welcomeTitle) {
+        welcomeTitle.innerText = `Welcome ${localStorage.getItem('studentName') || "Student"} 👋`;
+    }
 
-  students.push({name, phone, password:pass, grades:[], lessonsCompleted:[], storyCompleted:false});
-  localStorage.setItem("students", JSON.stringify(students));
-  alert("Student registered ✅");
-  document.getElementById("registerForm").style.display="none";
-}
+    // --- 4. نظام المؤقت الزمني (Timer) ---
+    const timerDisplay = document.getElementById('timerDisplay');
+    if (timerDisplay) {
+        let timeLeft = 30 * 60; // 30 دقيقة بالثواني
 
-function login(){
-  let phone = document.getElementById("phone").value;
-  let pass = document.getElementById("password").value;
-  let student = students.find(s=>s.phone===phone && s.password===pass);
-  if(student){
-    localStorage.setItem("currentStudent", JSON.stringify(student));
-    window.location="dashboard.html";
-  }else{
-    document.getElementById("msg").innerText="Wrong phone or password!";
-  }
-}
+        const timerInterval = setInterval(() => {
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
 
-function logout(){
-  localStorage.removeItem("currentStudent");
-  window.location="index.html";
-}
+            // تنسيق الوقت ليظهر 00:00
+            timerDisplay.innerText = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
 
-// الدروس + الملخصات للصف الثالث الثانوي 2026
-const lessons = [
-  {title:"Lesson 1 – Present Simple", summary:"I play, You play, He plays…"},
-  {title:"Lesson 2 – Past Simple", summary:"I played, I went, I saw…"},
-  {title:"Lesson 3 – Future Simple", summary:"I will go, She will see…"}
-];
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                alert("انتهى الوقت! سيتم إرسال إجاباتك تلقائياً.");
+                calculateAndSubmit(); // إنهاء تلقائي
+            }
+            timeLeft--;
+        }, 1000);
+    }
 
-function showLessons(){
-  let content = document.getElementById("content");
-  content.innerHTML = lessons.map((l,i)=>`
-    <h2>${l.title}</h2>
-    <p>${l.summary}</p>
-    <button onclick="markLesson(${i})">Mark as Completed ✅</button>
-    <hr>
-  `).join("");
-}
+    // --- 5. تصحيح الامتحان وحفظ الدرجة ---
+    function calculateAndSubmit() {
+        const answers = {
+            q1: "sensational", q2: "was waiting", q3: "pirate", q4: "broadsheet", q5: "cause",
+            q6: "for", q7: "had left", q8: "hasn't finished", q9: "witness", q10: "will have finished",
+            q11: "ambitious", q12: "both", q13: "moving", q14: "mustn't", q15: "highlight",
+            q16: "enjoy", q17: "where", q18: "was repaired", q19: "were", q20: "would become"
+        };
 
-function markLesson(i){
-  let student = JSON.parse(localStorage.getItem("currentStudent"));
-  if(!student.lessonsCompleted.includes(i)) student.lessonsCompleted.push(i);
-  updateStudent(student);
-  alert("Lesson marked as completed!");
-}
+        let score = 0;
+        const form = new FormData(document.getElementById('examForm'));
+        for (let key in answers) {
+            if (form.get(key) === answers[key]) score++;
+        }
 
-function showExam(){
-  let content = document.getElementById("content");
-  content.innerHTML = `
-    <h2>Mini Exam – الصف الثالث الثانوي 2026</h2>
-    <p>1) He ___ to school every day.</p>
-    <button onclick="submitAnswer(true)">goes</button>
-    <button onclick="submitAnswer(false)">go</button>
-    <p>2) I ___ yesterday.</p>
-    <button onclick="submitAnswer(true)">played</button>
-    <button onclick="submitAnswer(false)">play</button>
-  `;
-}
+        const phone = localStorage.getItem('studentPhone');
+        if (phone) {
+            database.ref('grades/' + phone).push({
+                examName: "Final Exam 2026",
+                score: score,
+                total: 20,
+                examDate: new Date().toLocaleString()
+            }).then(() => {
+                document.getElementById('examForm').style.display = "none"; // إخفاء الأسئلة
+                document.getElementById('resultArea').style.display = "block";
+                document.getElementById('scoreText').innerText = `انتهى الامتحان! درجتك: ${score} من 20`;
+            });
+        }
+    }
 
-function submitAnswer(correct){
-  let student = JSON.parse(localStorage.getItem("currentStudent"));
-  if(correct){ alert("Correct!"); student.grades.push(1); } 
-  else { alert("Wrong!"); student.grades.push(0); }
-  updateStudent(student);
-}
-
-function showStory(){
-  let content = document.getElementById("content");
-  content.innerHTML = `
-    <h2>The Count of Monte Cristo – قصة الصف الثالث 2026</h2>
-    <p>ملخص القصة: Edmond Dantès is falsely imprisoned and seeks revenge. He discovers treasure and returns to take justice...</p>
-    <h3>أسئلة القصة:</h3>
-    <p>1) Who betrayed Edmond Dantès?</p>
-    <p>2) What did he discover in prison?</p>
-    <p>3) How did he take revenge?</p>
-    <button onclick="markStory()">Mark Story as Read ✅</button>
-  `;
-}
-
-function markStory(){
-  let student = JSON.parse(localStorage.getItem("currentStudent"));
-  student.storyCompleted = true;
-  updateStudent(student);
-  alert("Story marked as completed!");
-}
-
-function showGrades(){
-  let student = JSON.parse(localStorage.getItem("currentStudent"));
-  let total = student.grades.reduce((a,b)=>a+b,0);
-  let content = document.getElementById("content");
-  content.innerHTML = `
-    <h2>Your Grades</h2>
-    <p>Score: ${total} / ${student.grades.length}</p>
-    <p>Lessons Completed: ${student.lessonsCompleted.length} / ${lessons.length}</p>
-    <p>Story Completed: ${student.storyCompleted ? "✅ Yes" : "❌ No"}</p>
-  `;
-}
-
-function updateStudent(student){
-  let all = JSON.parse(localStorage.getItem("students"));
-  let idx = all.findIndex(s=>s.phone===student.phone);
-  all[idx]=student;
-  localStorage.setItem("students", JSON.stringify(all));
-  localStorage.setItem("currentStudent", JSON.stringify(student));
-}
-
-// تحميل اسم الطالب عند فتح dashboard
-window.onload = function(){
-  let student = JSON.parse(localStorage.getItem("currentStudent"));
-  if(student) document.getElementById("studentName").innerText = student.name;
-}
+    // ربط زر الإرسال اليدوي بالوظيفة البرمجية
+    const submitBtn = document.getElementById('submitExam');
+    if (submitBtn) {
+        submitBtn.onclick = () => {
+            if(confirm("هل أنت متأكد من إنهاء الامتحان؟")) {
+                calculateAndSubmit();
+            }
+        };
+    }
+});
