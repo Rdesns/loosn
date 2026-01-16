@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8"><title>الرئيسية</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1 id="welcomeTitle">👋 مرحباً</h1>
+        
+        <div id="notificationArea" class="notification-box">
+            🔔 تنبيه هام: <span id="notifContent"></span>
+        </div>
+
+        <button class="btn-danger" id="logoutBtn" style="width:auto; margin-bottom:15px;">تسجيل خروج 🚪</button>
+        
+        <div class="menu-grid">
+            <button class="menu-item" onclick="window.location.href='exams.html'">📝 الامتحانات</button>
+            <button class="menu-item" onclick="window.location.href='lessons.html'">📚 الدروس والملفات</button>
+            <button class="menu-item" onclick="window.location.href='grades.html'">📊 درجاتي</button>
+        </div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
