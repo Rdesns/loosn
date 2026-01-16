@@ -1,31 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة تحكم الأدمن - مستر محمد</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container" style="max-width: 600px;">
-        <h1>لوحة تحكم الأدمن 👨‍🏫</h1>
-        <button class="btn-logout" onclick="window.location.href='dashboard.html'">العودة للرئيسية</button>
-
-        <div class="story-section">
-            <h3>إضافة درس جديد 📚</h3>
-            <input type="text" id="lessonTitle" placeholder="عنوان الدرس (مثلاً: Unit 1)">
-            <input type="text" id="videoUrl" placeholder="رابط فيديو اليوتيوب">
-            <input type="text" id="pdfUrl" placeholder="رابط ملف الـ PDF">
-            <button class="btn-primary" id="addLessonBtn">نشر الدرس للطلاب ✅</button>
-        </div>
-
-        <div id="adminLessonsList" class="story-section">
-            <h3>الدروس الحالية:</h3>
-            </div>
-    </div>
-
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
-    <script src="app.js"></script>
-</body>
-</html>
