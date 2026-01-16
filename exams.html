@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Exam 2026 - Mr Mohamed</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .timer-box { position: sticky; top: 10px; background: #e74c3c; color: white; padding: 10px 20px; border-radius: 50px; font-size: 1.2rem; font-weight: bold; display: inline-block; margin-bottom: 20px; z-index: 1000; }
+        .question-block { margin-bottom: 25px; border-bottom: 1px dashed #34495e; padding-bottom: 15px; text-align: right; }
+        .question-text { font-weight: bold; color: #34b7f1; margin-bottom: 10px; display: block; }
+        label { display: block; margin: 8px 0; cursor: pointer; }
+        input[type="radio"] { margin-left: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container" style="max-width: 700px;">
+        <h1>Comprehensive Exam 2026 📝</h1>
+        <div class="timer-box">⏳ Time Left: <span id="timerDisplay">30:00</span></div>
+        <br>
+        <button class="btn-logout" onclick="window.location.href='dashboard.html'">العودة للرئيسية 🏠</button>
+
+        <form id="examForm" class="story-section">
+            <div class="question-block">
+                <span class="question-text">1. Tabloids usually focus on _______ stories and celebrities.</span>
+                <label><input type="radio" name="q1" value="sensational"> sensational</label>
+                <label><input type="radio" name="q1" value="formal"> formal</label>
+            </div>
+            <div class="question-block">
+                <span class="question-text">2. While I _______ for the train, I met an old friend.</span>
+                <label><input type="radio" name="q2" value="waited"> waited</label>
+                <label><input type="radio" name="q2" value="was waiting"> was waiting</label>
+            </div>
+            <div class="question-block">
+                <span class="question-text">3. To _______ is to copy and use someone's work illegally.</span>
+                <label><input type="radio" name="q3" value="pirate"> pirate</label>
+                <label><input type="radio" name="q3" value="publish"> publish</label>
+            </div>
+            <div class="question-block">
+                <span class="question-text">4. A _______ is a large newspaper with serious news.</span>
+                <label><input type="radio" name="q4" value="tabloid"> tabloid</label>
+                <label><input type="radio" name="q4" value="broadsheet"> broadsheet</label>
+            </div>
+            <div class="question-block">
+                <span class="question-text">5. The police are investigating the _______ of the accident.</span>
+                <label><input type="radio" name="q5" value="cause"> cause</label>
+                <label><input type="radio" name="q5" value="reason"> reason</label>
+            </div>
+            <div class="question-block">
+                <span class="question-text">6. I haven't seen Ali _______ the last year.</span>
+                <label><input type="radio" name="q6" value="since"> since</label>
+                <label><input type="radio" name="q6" value="for"> for</label>
+            </div>
+            <div class="question-block">
+                <span class="question-text">7. When I arrived, the train _______. I missed it.</span>
+                <label><input type="radio" name="q7" value="left"> left</label>
+                <label><input type="radio" name="q7" value="had left"> had left</label>
+            </div>
+            <div class="question-block">
+                <span class="question-text">8. She _______ her homework yet.</span>
+                <label><input type="radio" name="q8" value="didn't finish"> didn't finish</label>
+                <label><input type="radio" name="q8" value="hasn't finished"> hasn't finished</label>
+            </div>
+            <div class="question-block">
+                <span class="question-text">9. A/An _______ is a person who sees a crime.</span>
+                <label><input type="radio" name="q9" value="witness"> witness</label>
+                <label><input type="radio" name="q9" value="lawyer"> lawyer</label>
+            </div>
+            <div class="question-block">
+                <span class="question-text">10. By 2026, I _______ my university studies.</span>
+                <label><input type="radio" name="q10" value="will finish"> will finish</label>
+                <label><input type="radio" name="q10" value="will have finished"> will have finished</label>
+            </div>
+            <div class="question-block">
+                <span class="question-text">11. He is very _______; he always wants to succeed.</span>
+                <label><input type="radio" name="q11" value="ambitious"> ambitious</label>
+                <label><input type="radio" name="q11" value="lazy"> lazy</label>
+            </div>
+            <div class="question-block">
+                <span class="question-text">12. Writing _______ is good to improve your English.</span>
+                <label><input type="radio" name="q12" value="essays"> essays</label>
+                <label><input type="radio" name="q12" value="both"> both</label>
+            </div>
+            <div class="question-block">
+                <span class="question-text">13. The story was so _______ that I cried.</span>
+                <label><input type="radio" name="q13" value="moving"> moving</label>
+                <label><input type="radio" name="q13" value="boring"> boring</label>
+            </div>
+            <div class="question-block">
+                <span class="question-text">14. You _______ speak loudly in the library.</span>
+                <label><input type="radio" name="q14" value="must"> must</label>
+                <label><input type="radio" name="q14" value="mustn't"> mustn't</label>
+            </div>
+            <div class="question-block">
+                <span class="question-text">15. The teacher asked us to _______ main points.</span>
+                <label><input type="radio" name="q15" value="highlight"> highlight</label>
+                <label><input type="radio" name="q15" value="forget"> forget</label>
+            </div>
+            <div class="question-block">
+                <span class="question-text">16. I _______ playing tennis every Friday.</span>
+                <label><input type="radio" name="q16" value="enjoy"> enjoy</label>
+                <label><input type="radio" name="q16" value="want"> want</label>
+            </div>
+            <div class="question-block">
+                <span class="question-text">17. This is the house _______ I was born.</span>
+                <label><input type="radio" name="q17" value="where"> where</label>
+                <label><input type="radio" name="q17" value="which"> which</label>
+            </div>
+            <div class="question-block">
+                <span class="question-text">18. The car _______ by the mechanic yesterday.</span>
+                <label><input type="radio" name="q18" value="repaired"> repaired</label>
+                <label><input type="radio" name="q18" value="was repaired"> was repaired</label>
+            </div>
+            <div class="question-block">
+                <span class="question-text">19. If I _______ you, I would study hard.</span>
+                <label><input type="radio" name="q19" value="am"> am</label>
+                <label><input type="radio" name="q19" value="were"> were</label>
+            </div>
+            <div class="question-block">
+                <span class="question-text">20. I wish I _______ a doctor in the future.</span>
+                <label><input type="radio" name="q20" value="become"> become</label>
+                <label><input type="radio" name="q20" value="would become"> would become</label>
+            </div>
+
+            <button type="button" class="btn-finish" id="submitExam">إنهاء الامتحان وإرسال الدرجة ✅</button>
+        </form>
+
+        <div id="resultArea" style="display: none; margin-top: 20px; background:#28a745; padding:20px; border-radius:15px;">
+            <h2 id="scoreText"></h2>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
