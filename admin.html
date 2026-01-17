@@ -1,60 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8"><title>لوحة التحكم - Admin</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container" id="adminContent" style="display: none;">
-        <h1>لوحة القيادة 👨‍🏫</h1>
-        <button class="btn-danger" onclick="window.location.href='index.html'">تسجيل خروج</button>
-
-        <div class="admin-section" style="border: 2px solid #f39c12;">
-            <h3>📥 إضافة امتحان كامل (نسخ ولصق)</h3>
-            <p style="font-size:0.9rem; color:#ccc;">
-                اكتب الأسئلة تحت بعضها بهذا التنسيق:<br>
-                السؤال | الإجابة الصحيحة | خطأ 1 | خطأ 2
-            </p>
-            <textarea id="bulkText" rows="10" placeholder="مثال:
-She ___ to school. | went | go | goes
-Ali ___ tall. | is | are | am" style="direction:ltr; text-align:left;"></textarea>
-            <button class="btn-primary" id="bulkUploadBtn" style="background:#8e44ad;">🚀 رفع القائمة بالكامل</button>
-        </div>
-
-        <div class="admin-section">
-            <h3>📢 الإشعارات</h3>
-            <textarea id="notifText" placeholder="اكتب التنبيه هنا..."></textarea>
-            <button class="btn-primary" id="sendNotifBtn">إرسال 🔔</button>
-            <button class="btn-danger" id="clearNotifBtn">مسح</button>
-        </div>
-
-        <div class="admin-section">
-            <h3>📚 الدروس</h3>
-            <input type="text" id="lessonTitle" placeholder="العنوان">
-            <input type="text" id="videoUrl" placeholder="رابط يوتيوب">
-            <input type="text" id="pdfUrl" placeholder="رابط PDF">
-            <button class="btn-primary" id="addLessonBtn">نشر ✅</button>
-            <button class="btn-danger" id="clearLessons">حذف الكل 🗑️</button>
-        </div>
-
-        <div class="admin-section">
-            <h3>📝 سؤال فردي (يدوي)</h3>
-            <input type="text" id="qText" placeholder="السؤال">
-            <input type="text" id="op1" placeholder="الإجابة الصحيحة">
-            <input type="text" id="op2" placeholder="خطأ 1">
-            <input type="text" id="op3" placeholder="خطأ 2">
-            <button class="btn-primary" id="addQuestionBtn">إضافة ➕</button>
-            <button class="btn-danger" id="clearExams">حذف الامتحان الحالي 🗑️</button>
-        </div>
-
-        <div class="admin-section">
-            <h3>📊 النتائج</h3>
-            <button class="btn-danger" id="clearGrades">تصفير السجل</button>
-            <div id="gradesList" style="margin-top:10px; font-size:0.8rem; text-align:left;"></div>
-        </div>
-    </div>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
-    <script src="app.js"></script>
-</body>
-</html>
