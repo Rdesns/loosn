@@ -1,26 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8"><title>Exam</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-        <div class="timer-box">⏳ المتبقي: <span id="timerDisplay">60:00</span></div>
-        <button class="btn-danger" onclick="window.location.href='dashboard.html'" style="width:auto; padding:5px;">خروج</button>
-
-        <form id="examForm">
-            <div id="dynamicQuestionsContainer"><p>جاري تحميل الامتحان...</p></div>
-            <button type="button" id="submitExamBtn" class="btn-primary" style="display:none; margin-top:20px;">تسليم الإجابات 🏁</button>
-        </form>
-
-        <div id="resultArea" style="display: none; margin-top: 20px; background:#27ae60; padding:20px; border-radius:10px;">
-            <h2 id="scoreText"></h2>
-            <button class="btn-secondary" onclick="window.location.href='dashboard.html'">عودة للرئيسية</button>
-        </div>
-    </div>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
-    <script src="app.js"></script>
-</body>
-</html>
