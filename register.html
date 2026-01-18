@@ -1,26 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <title>إنشاء حساب جديد</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
-</head>
-<body>
-    <div class="login-card">
-        <h1>إنشاء حساب طالب جديد 🎓</h1>
-        
-        <input type="text" id="newName" placeholder="الاسم الثلاثي" required>
-        <input type="number" id="newPhone" placeholder="رقم الهاتف (سيكون اسم المستخدم)" required>
-        <input type="password" id="newPassword" placeholder="كلمة المرور" required>
-        
-        <button onclick="registerStudent()" class="btn-primary">تفعيل الحساب والدخول ✅</button>
-        
-        <br><br>
-        <button class="btn-secondary" onclick="window.location.href='index.html'">لديك حساب؟ تسجيل دخول</button>
-    </div>
-
-    <script src="app.js"></script>
-</body>
-</html>
