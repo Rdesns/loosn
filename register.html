@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب جديد | منصة مستر محمد</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-atom fa-spin"></i> مستر/ محمد السيد
+        </div>
+        <button onclick="window.location.href='index.html'" class="btn-login">الرئيسية</button>
+    </nav>
+
+    <header class="hero" style="padding-bottom: 0; min-height: 250px;">
+        <div class="hero-content">
+            <h1>انضم لأبطال 2026 🎓</h1>
+            <p>أنشئ حسابك في ثوانٍ وابدأ رحلة التفوق</p>
+        </div>
+        <div class="wave-container">
+            <svg viewBox="0 0 1440 320"><path fill="#f5f9fc" fill-opacity="1" d="M0,192L48,197.3C96,203,192,213,288,229.3C384,245,480,267,576,250.7C672,235,768,181,864,181.3C960,181,1056,235,1152,234.7C1248,235,1344,181,1392,154.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
+        </div>
+    </header>
+
+    <section class="register-section">
+        <div class="register-card">
+            <div class="card-header">
+                <i class="fas fa-user-plus icon-header"></i>
+                <h3>بيانات الطالب الجديد</h3>
+            </div>
+            
+            <div class="form-group">
+                <i class="fas fa-user input-icon"></i>
+                <input type="text" id="newName" placeholder="الاسم الثلاثي" required>
+            </div>
+
+            <div class="form-group">
+                <i class="fas fa-phone input-icon"></i>
+                <input type="number" id="newPhone" placeholder="رقم الهاتف (اسم المستخدم)" required>
+            </div>
+
+            <div class="form-group">
+                <i class="fas fa-lock input-icon"></i>
+                <input type="password" id="newPassword" placeholder="كلمة المرور" required>
+            </div>
+
+            <div class="form-group">
+                <i class="fas fa-graduation-cap input-icon"></i>
+                <select id="studentGrade">
+                    <option value="" disabled selected>-- اختر الصف الدراسي --</option>
+                    <option value="1">الصف الأول الثانوي</option>
+                    <option value="2">الصف الثاني الثانوي</option>
+                    <option value="3">الصف الثالث الثانوي</option>
+                </select>
+            </div>
+
+            <button onclick="registerStudent()" class="btn-register-action">تفعيل الحساب وبدء الدراسة 🚀</button>
+            
+            <p class="login-link">
+                لديك حساب بالفعل؟ <a href="index.html">سجل دخول من هنا</a>
+            </p>
+        </div>
+    </section>
+
+    <footer>
+        <p>جميع الحقوق محفوظة © مستر محمد السيد 2026</p>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    <script src="app.js"></script>
+    
+    <script>
+        // كود بسيط عشان يختار السنة تلقائي لو الطالب اختارها في الصفحة اللي فاتت
+        document.addEventListener("DOMContentLoaded", function() {
+            const selected = localStorage.getItem('selectedGrade');
+            if(selected) {
+                document.getElementById('studentGrade').value = selected;
+            }
+        });
+    </script>
+</body>
+</html>

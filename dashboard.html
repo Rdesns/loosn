@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بروفايل الطالب | الأسطورة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="menu-icon" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </div>
+        <div class="logo">
+            <i class="fas fa-atom fa-spin"></i> مستر/ محمد السيد
+        </div>
+        <div class="user-avatar-mini">
+            <i class="fas fa-user-graduate"></i>
+        </div>
+    </nav>
+
+    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+    <div class="side-menu" id="sideMenu">
+        <div class="menu-header">
+            <i class="fas fa-user-astronaut" style="font-size:3rem; color:white; margin-bottom:10px;"></i>
+            <h3 id="sideMenuName">اسم الطالب</h3>
+            <p style="font-size:0.8rem; opacity:0.8;">دفعة أبطال 2026</p>
+        </div>
+        <ul class="menu-links">
+            <li onclick="switchSection('home')"><i class="fas fa-home"></i> الرئيسية</li>
+            <li onclick="switchSection('lessons')"><i class="fas fa-play-circle"></i> قاعة المحاضرات</li>
+            <li onclick="switchSection('exams')"><i class="fas fa-pen-alt"></i> ساحة الامتحانات</li>
+            <li onclick="switchSection('grades')"><i class="fas fa-chart-line"></i> سجل البطولات (الدرجات)</li>
+            <li onclick="logout()" style="color:#ff7675;"><i class="fas fa-sign-out-alt"></i> تسجيل خروج</li>
+        </ul>
+    </div>
+
+    <div class="main-container">
+        
+        <section id="homeSection" class="active-section">
+            <header class="hero-card">
+                <div class="hero-text">
+                    <h1 id="welcomeTitle">منور يا وحش الكون 👋</h1>
+                    <p>جاهز تفرم الإنجليزي النهاردة؟</p>
+                    <button class="btn-start" onclick="switchSection('lessons')">ابدأ المذاكرة فوراً 🚀</button>
+                </div>
+                <i class="fas fa-rocket big-icon"></i>
+            </header>
+
+            <div id="notificationArea" class="notif-box">
+                <i class="fas fa-bullhorn"></i> <span id="notifContent"></span>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card" onclick="switchSection('exams')">
+                    <i class="fas fa-tasks" style="color:#0984e3;"></i>
+                    <h3>المهام</h3>
+                    <p>امتحانات جديدة</p>
+                </div>
+                <div class="stat-card" onclick="switchSection('grades')">
+                    <i class="fas fa-trophy" style="color:#f1c40f;"></i>
+                    <h3>مستواك</h3>
+                    <p>تابع التقدم</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="lessonsSection" class="hidden-section">
+            <div class="section-header">
+                <h2><i class="fas fa-video"></i> مكتبة الشرح</h2>
+                <p>ركز في كل كلمة، الحلم بيقرب! ✨</p>
+            </div>
+            <div id="studentLessonsList">
+                </div>
+        </section>
+
+        <section id="examsSection" class="hidden-section">
+            <div class="section-header">
+                <h2><i class="fas fa-stopwatch"></i> تحدي الأبطال</h2>
+                <p>وريني شطارتك يا بطل 💪</p>
+            </div>
+            
+            <div class="exam-container-box">
+                <div id="timerDisplay" class="timer-float">00:00</div>
+                <form id="examForm">
+                    <div id="dynamicQuestionsContainer"></div>
+                </form>
+                <button type="button" id="submitExamBtn" class="btn-submit-exam" style="display:none;">تسليم الإجابة وإنهاء 🏁</button>
+            </div>
+            
+            <div id="resultArea" style="display:none; text-align:center; padding:50px 0;">
+                <i class="fas fa-medal" style="font-size:5rem; color:#f1c40f; margin-bottom:20px;"></i>
+                <h2 id="scoreText"></h2>
+                <button class="btn-start" onclick="location.reload()">العودة للرئيسية</button>
+            </div>
+        </section>
+
+        <section id="gradesSection" class="hidden-section">
+            <div class="section-header">
+                <h2><i class="fas fa-history"></i> تاريخك المشرف</h2>
+                <p>دي نتيجة تعبك، كمل وهتوصل 🔝</p>
+            </div>
+            <div id="myGradesList"></div>
+        </section>
+
+    </div>
+
+    <a href="https://wa.me/+201099226659" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    <script src="app.js"></script>
+    
+    <script>
+        // كود فتح وقفل القائمة والتبديل بين الصفحات
+        function toggleMenu() {
+            document.getElementById('sideMenu').classList.toggle('active');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+
+        function switchSection(secId) {
+            // إخفاء كل الأقسام
+            document.getElementById('homeSection').classList.remove('active-section');
+            document.getElementById('lessonsSection').classList.remove('active-section');
+            document.getElementById('examsSection').classList.remove('active-section');
+            document.getElementById('gradesSection').classList.remove('active-section');
+
+            document.getElementById('homeSection').classList.add('hidden-section');
+            document.getElementById('lessonsSection').classList.add('hidden-section');
+            document.getElementById('examsSection').classList.add('hidden-section');
+            document.getElementById('gradesSection').classList.add('hidden-section');
+
+            // إظهار القسم المطلوب
+            const target = document.getElementById(secId + 'Section');
+            target.classList.remove('hidden-section');
+            target.classList.add('active-section');
+
+            // قفل القائمة لو مفتوحة
+            toggleMenu();
+        }
+
+        function logout() {
+            if(confirm("رايح فين يا بطل؟ هتسجل خروج؟")) {
+                localStorage.clear();
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+</body>
+</html>

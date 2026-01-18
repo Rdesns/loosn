@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة الأدمن | Admin Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* تنسيقات خاصة بصفحة الأدمن */
+        body { background: #2c3e50; /* خلفية غامقة للأدمن */ }
+        
+        /* صندوق الدخول للأدمن */
+        .admin-login-container {
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh; background: linear-gradient(135deg, #2c3e50 0%, #000000 100%);
+        }
+        .admin-card {
+            background: white; width: 90%; max-width: 400px; padding: 40px;
+            border-radius: 20px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border-top: 5px solid #e74c3c; /* خط أحمر من فوق */
+        }
+        .admin-card h2 { color: #2c3e50; margin-bottom: 20px; }
+        .admin-card i { font-size: 3rem; color: #e74c3c; margin-bottom: 20px; }
+        
+        /* تنسيقات لوحة التحكم (الداشبورد) */
+        .dashboard-wrapper { display: none; /* مخفية في البداية */ background: #f5f9fc; min-height: 100vh; }
+        .admin-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px; padding: 20px; margin-top: -80px; position: relative; z-index: 10;
+        }
+        .control-card {
+            background: white; padding: 20px; border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 4px solid var(--main-color);
+        }
+        .control-header { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        textarea { width: 100%; border: 2px solid #eee; border-radius: 10px; padding: 10px; font-family: 'Tajawal'; box-sizing: border-box; resize: vertical; }
+    </style>
+</head>
+<body>
+
+    <div id="adminLoginPanel" class="admin-login-container">
+        <div class="admin-card">
+            <i class="fas fa-user-lock"></i>
+            <h2>منطقة محظورة ⛔</h2>
+            <p style="color:#777; margin-bottom:20px;">يرجى إدخال بيانات التحكم</p>
+            
+            <input type="text" id="adminUser" placeholder="اسم المسؤول" style="background:#f9f9f9;">
+            <input type="password" id="adminPass" placeholder="كلمة المرور السرية" style="background:#f9f9f9;">
+            
+            <button onclick="checkAdminLogin()" class="btn-main" style="background:#e74c3c; margin-top:10px;">
+                فتح البوابة <i class="fas fa-key"></i>
+            </button>
+            <p onclick="window.location.href='index.html'" style="cursor:pointer; margin-top:20px; color:#aaa; font-size:0.9rem;">العودة للرئيسية</p>
+        </div>
+    </div>
+
+    <div id="adminDashboard" class="dashboard-wrapper">
+        
+        <nav class="navbar">
+            <div class="logo"><i class="fas fa-user-secret"></i> غرفة العمليات</div>
+            <button onclick="window.location.href='index.html'" class="btn-login" style="color:#e74c3c; border-color:#e74c3c;">خروج</button>
+        </nav>
+
+        <header class="hero" style="background: linear-gradient(135deg, #2c3e50, #34495e); min-height: 250px;">
+            <div class="hero-content">
+                <h1>أهلاً يا مايسترو 🎩</h1>
+                <p>التحكم الكامل في منصة 2026</p>
+            </div>
+            <div class="wave-container">
+                <svg viewBox="0 0 1440 320"><path fill="#f5f9fc" fill-opacity="1" d="M0,192L48,202.7C96,213,192,235,288,229.3C384,224,480,192,576,181.3C672,171,768,181,864,192C960,203,1056,213,1152,208C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
+            </div>
+        </header>
+
+        <div class="admin-grid">
+            
+            <div class="control-card" style="grid-column: 1 / -1; border-color: #f1c40f;">
+                <div class="control-header"><i class="fas fa-magic" style="color:#f1c40f;"></i> <h3>الرفع الجماعي للامتحان</h3></div>
+                <textarea id="bulkText" rows="5" placeholder="السؤال | الصح | خطأ1 | خطأ2" style="direction:ltr; text-align:left;"></textarea>
+                <button id="bulkUploadBtn" class="btn-go" style="background:#f1c40f; color:#000; margin-top:10px;">رفع الأسئلة 🚀</button>
+            </div>
+
+            <div class="control-card" style="border-color: #e74c3c;">
+                <div class="control-header"><i class="fas fa-bullhorn" style="color:#e74c3c;"></i> <h3>تنبيهات عاجلة</h3></div>
+                <input type="text" id="notifText" placeholder="الرسالة...">
+                <button id="sendNotifBtn" class="btn-main" style="background:#e74c3c; margin-top:5px;">إرسال</button>
+                <button id="clearNotifBtn" class="btn-login" style="margin-top:5px; color:#e74c3c; border-color:#e74c3c; width:100%;">مسح</button>
+            </div>
+
+            <div class="control-card">
+                <div class="control-header"><i class="fas fa-video"></i> <h3>الدروس</h3></div>
+                <input type="text" id="lessonTitle" placeholder="العنوان" style="margin-bottom:5px;">
+                <input type="text" id="videoUrl" placeholder="رابط الفيديو" style="margin-bottom:5px;">
+                <input type="text" id="pdfUrl" placeholder="رابط الملزمة">
+                <button id="addLessonBtn" class="btn-main" style="margin-top:10px;">نشر</button>
+                <button id="clearLessons" class="btn-login" style="margin-top:5px; color:red; border-color:red; width:100%;">حذف الكل</button>
+            </div>
+
+            <div class="control-card">
+                <div class="control-header"><i class="fas fa-pen"></i> <h3>سؤال يدوي</h3></div>
+                <input type="text" id="qText" placeholder="السؤال" style="margin-bottom:5px;">
+                <input type="text" id="op1" placeholder="الإجابة الصح" style="border-color:green; margin-bottom:5px;">
+                <input type="text" id="op2" placeholder="خطأ 1" style="margin-bottom:5px;">
+                <input type="text" id="op3" placeholder="خطأ 2">
+                <button id="addQuestionBtn" class="btn-main" style="margin-top:10px;">إضافة</button>
+                <button id="clearExams" class="btn-login" style="margin-top:5px; color:red; border-color:red; width:100%;">حذف الامتحان</button>
+            </div>
+
+            <div class="control-card" style="grid-column: 1 / -1;">
+                <div class="control-header">
+                    <i class="fas fa-poll"></i> <h3>شريط النتائج</h3>
+                    <button id="clearGrades" style="margin-right:auto; background:red; color:white; border:none; padding:5px; border-radius:5px; cursor:pointer;">تصفير</button>
+                </div>
+                <div id="gradesList" style="max-height:150px; overflow-y:auto;"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database-compat.js"></script>
+    <script src="app.js"></script>
+
+    <script>
+        function checkAdminLogin() {
+            const u = document.getElementById('adminUser').value;
+            const p = document.getElementById('adminPass').value;
+            
+            // بيانات الدخول
+            if(u === "Muhammad Al-Sayed" && p === "Muhammad##2026") {
+                document.getElementById('adminLoginPanel').style.display = 'none'; // إخفاء الدخول
+                document.getElementById('adminDashboard').style.display = 'block'; // إظهار العظمة
+                alert("مرحباً بك يا مستر محمد 🫡");
+            } else {
+                alert("بيانات خاطئة! حاول مرة أخرى ❌");
+            }
+        }
+    </script>
+</body>
+</html>
